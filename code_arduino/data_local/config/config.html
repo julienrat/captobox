@@ -15,7 +15,7 @@
 		var current_draged_capt2="";
 		var frequency =1000;
 		var xh_serveur = new XMLHttpRequest();
-		var config="http://192.168.1.10/lecture_config";
+		var config="/lecture_config";
 		var current_draged_choose="";
 		var request="";
 		var ssid="";
@@ -42,8 +42,7 @@
 		
 		function get_config() {
 			
-
-
+		
 			xh_serveur.open("GET", config, true);
 			
       
@@ -71,7 +70,9 @@
 						document.getElementById('request').value = request;
 						document.getElementById('frequency').value = frequency;
 						document.getElementById('host').value = host;
-	
+						
+						document.getElementById('capt1').name = current_draged_capt1;
+						document.getElementById('capt2').value = current_draged_capt2;
 						console.log(current_draged_capt1);
 						console.log("configuration chargée");
 						
@@ -79,7 +80,7 @@
 				}
 			}
 			xh_serveur.send(null);
-			//set_images();
+			set_images();
 		}
 			
 			
@@ -125,7 +126,6 @@
 			}
 							
 		}
-		
 		function sleep (time) {
 			return new Promise((resolve) => setTimeout(resolve, time));
 		}
@@ -143,13 +143,13 @@
 		
 		console.log("capteur 1 : "+current_draged_capt1);
 		console.log("capteur 2 : "+current_draged_capt2);
-		var envoi_config="http://192.168.1.10/write?capt1="+current_draged_capt1+"&capt2="+current_draged_capt2+"&frequency="+frequency+"&client="+client+"&ssid="+ssid+"&password="+password+"&request="+request+"&host="+host+"&stream="+stream;
+		var envoi_config="write?capt1="+current_draged_capt1+"&capt2="+current_draged_capt2+"&frequency="+frequency+"&client="+client+"&ssid="+ssid+"&password="+password+"&request="+request+"&host="+host+"&stream="+stream;
 		console.log(envoi_config);
 		httpGet(envoi_config );
-		sleep(4000).then(() => {
+
+		sleep(10000).then(() => {
 		window.location.href=( '../');
 		})
-		
 		
 		}
 		function httpGet(theUrl)
@@ -160,10 +160,9 @@
 			return xmlHttp.responseText;
 		}
 		
-		
 		function set_images()
 		{
-			var delay=100;
+			var delay=300;
 			sleep1(delay);
 			document.getElementById("co2").src="img/carbone.jpg";
 			console.log("image1");
@@ -179,16 +178,12 @@
 			sleep1(delay);
 			document.getElementById("dht11").src="img/dht11.jpg";
 			console.log("image5");
-			sleep1(delay);
-			
+			sleep1(delay);			
 			document.getElementById("bmp180").src="img/BMP180.jpg";
-			console.log("image6");
-			
+			console.log("image6");			
 			sleep1(delay);
 			document.getElementById("captobox").src="img/capto.png";
 			console.log("image7");
-			
-			
 		}
 		
 		function sleep1(milliseconds) {
@@ -197,9 +192,9 @@
 					if ((new Date().getTime() - start) > milliseconds){
 					break;
 				}
+			}
 		}
-}
-    
+		
 
     </script>
 </head>
@@ -221,7 +216,7 @@
     </div>
 <div id="center">
     <div id="capt1" ondrop="DropHandler_capt1(this, event)" ondragstart="DragHandler_capt1(this, event)" ondragenter="return false" ondragover="return false" class="dndbox"></div>
-    <img id = "captobox" src="img/blank.jpg" class="captobox"/>
+    <img src="img/blank.jpg" class="captobox"/>
     <div id="capt2" ondrop="DropHandler_capt2(this, event)" ondragstart="DragHandler_capt2(this, event)" ondragenter="return false" ondragover="return false" class="dndbox"></div>
 	
 </div>
@@ -241,7 +236,8 @@
 <textarea id= "request" type="text" placeholder="requete"></textarea>
 </header>
 <div id="center">
-<button type="button" onclick= "set_images()">Uploader la configuration !</button>
+<button type="button" onclick= "upload_config()">Uploader la configuration !</button>
 </div>
+
 </body>
 </html>
