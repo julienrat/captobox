@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Chart using XML Data</title>
+<script type="text/javascript" src="jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="canvasjs.min.js"></script>
+<script type="text/javascript">
+    window.onload = function() {
+        var dataPoints = [];
+        var title=[];
+	 
+        function getDataPointsFromCSV(csv) {
+            var dataPoints = csvLines = points = [];
+            csvLines = csv.split(/[\r?\n|\r|\n]+/);         
+		        
+            for (var i = 1; i < csvLines.length; i++)
+                if (csvLines[i].length > 0) {
+                    points = csvLines[i].split(":"); 
+                    title= csvLines[1].split(":");                 
+                    var date_parsed = points[0].split(",");
+                    dataPoints.push({ 						
+                        x: new Date(date_parsed[0],date_parsed[1],date_parsed[2],date_parsed[3],date_parsed[4],date_parsed[5]), 
+                        y: parseFloat(points[2]) 		
+                    });
+                }
+            return dataPoints;
+        }
+	
+	$.get("save.csv", function(data) {
+	    var chart = new CanvasJS.Chart("chartContainer", {
+		    title: {
+		         text: title[2],
+		    },
+		    
+			
+		    
+		    data: [{
+		         type: "spline",
+		         
+		         dataPoints: getDataPointsFromCSV(data)
+		      }]
+	     });
+		
+	      chart.render();
+
+	});
+  }
+</script>
+</head>
+<body>
+	<div id="chartContainer" style="width:100%; height:300px;"></div>
+</body>
+</html>
