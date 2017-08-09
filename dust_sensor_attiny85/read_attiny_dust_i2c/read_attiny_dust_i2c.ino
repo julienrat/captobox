@@ -23,17 +23,17 @@
 #define DELAY_TEMP_READ   140              // wait 140 ms before ask temp value
 #define DELAY_NEW_SAMPLE 4000              // time before new sample (1s)
 
-float tempValue;
+float dustValue;
 byte* floatPtr;
 
 void setup(){
   Wire.begin();                            // start I2C Bus as Master
   Serial.begin(38400);                     // start serial to send dust output
-  tempValue = 0;
+  dustValue = 0;
 }
 
 void loop(){
-  tempValue = 0;
+  dustValue = 0;
 
   Wire.beginTransmission(I2C_SLAVE_ADDR_TEMP);  // transmit to slave device
   Wire.write(0xFF);                             // sends usuless data 
@@ -44,14 +44,14 @@ void loop(){
   Wire.requestFrom(I2C_SLAVE_ADDR_TEMP, 4);     // request 4 byte from slave (float = 4 bytes)
 
   if (Wire.available()) {
-    floatPtr = (byte*) &tempValue;
+    floatPtr = (byte*) &dustValue;
     (*floatPtr) = Wire.read(); ++floatPtr;
     (*floatPtr) = Wire.read(); ++floatPtr;
     (*floatPtr) = Wire.read(); ++floatPtr;
     (*floatPtr) = Wire.read();
     Serial.print("dust = ");      // print out slave byte to Serial monitor
-    Serial.print(tempValue,DEC);  // print out slave byte to Serial monitor
-    Serial.println(" mg/m3");         // print out slave byte to Serial monitor
+    Serial.print(dustValue,DEC);  // print out slave byte to Serial monitor
+    Serial.println(" ug/m3");         // print out slave byte to Serial monitor
   } else {
     Serial.println("NaN");  
   }
