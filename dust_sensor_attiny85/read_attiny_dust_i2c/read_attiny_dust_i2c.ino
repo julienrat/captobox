@@ -21,7 +21,7 @@
 #define I2C_SLAVE_ADDR_TEMP   0x27         // I2C Temperature slave address
 
 #define DELAY_TEMP_READ   140              // wait 140 ms before ask temp value
-#define DELAY_NEW_SAMPLE 4000              // time before new sample (1s)
+#define DELAY_NEW_SAMPLE 5000              // time before new sample (1s)
 
 float dustValue;
 byte* floatPtr;
