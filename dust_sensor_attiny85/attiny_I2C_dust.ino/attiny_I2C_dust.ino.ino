@@ -66,7 +66,7 @@ void loop() {
     byteRcvd = TinyWireS.receive();      // do nothing with the message
     digitalWrite(ledInd, HIGH);
 
-    for (i = 0; i < 50; i++) {
+    for (i = 0; i < 5; i++) {
       digitalWrite(ledPower, LOW); // power on the LED
       delayMicroseconds(samplingTime);// make 50 temperature sample
       dust.add(analogRead(measurePin));   // read and store temperature sensor output
