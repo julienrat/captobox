@@ -31,7 +31,7 @@
 
 #define DELAY_ADC       10  // time before re-read ADC 10 us
 
-Statistic temp;
+Statistic dust;
 float     result;
 
 byte*     floatPtr;
@@ -55,7 +55,7 @@ void setup() {
   pinMode(ledInd, OUTPUT);
   TinyWireS.begin(I2C_SLAVE_ADDR);
 
-  temp.clear();
+  dust.clear();
   result  = 0;
   byteRcvd = 0;
   i       = 0;
@@ -65,17 +65,21 @@ void loop() {
   if (TinyWireS.available()) {         // if we get an I2C message
     byteRcvd = TinyWireS.receive();      // do nothing with the message
 
-    digitalWrite(ledPower, LOW); // power on the LED
-    digitalWrite(ledInd, HIGH); // power on the LED
 
-    delayMicroseconds(samplingTime);
-    voMeasured = analogRead(measurePin); // read the dust value
-    delayMicroseconds(deltaTime);
-    digitalWrite(ledPower, HIGH); // turn the LED off
+    for (i = 0; i < 50; i++) {
+      digitalWrite(ledPower, LOW); // power on the LED
+      delayMicroseconds(samplingTime);// make 50 temperature sample
+      dust.add(analogRead(measurePin));   // read and store temperature sensor output
+      delayMicroseconds(DELAY_ADC);      // wait 10 us to stabilise ADC
+      delayMicroseconds(deltaTime);
+      digitalWrite(ledPower, HIGH); // turn the LED off
+      delayMicroseconds(sleepTime);
+    }
 
-    delayMicroseconds(sleepTime);
+
+
     // 0 - 5.0V mapped to 0 - 1023 integer values
-    calcVoltage = voMeasured * (5.0 / 1024);
+    calcVoltage = dust.average() * (5.0 / 1024);
 
     // linear eqaution taken from http://www.howmuchsnow.com/arduino/airquality/
     // Chris Nafis (c) 2012
@@ -89,7 +93,7 @@ void loop() {
     result = dustDensity ; // convert the result into a humain readable output
 
     if (result < 0) result = 0;          // avoid eratic datas
-    temp.clear();                        // clear statistics to avoid leack and data stacking
+    dust.clear();                        // clear statistics to avoid leack and data stacking
 
     floatPtr = (byte*) &result;
     TinyWireS.send( *floatPtr );  // send first byte
