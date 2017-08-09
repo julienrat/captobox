@@ -65,7 +65,8 @@ void loop() {
   if (TinyWireS.available()) {         // if we get an I2C message
     byteRcvd = TinyWireS.receive();      // do nothing with the message
 
-
+ digitalWrite(ledInd, HIGH); // turn the LED off
+  }
     for (i = 0; i < 50; i++) {
       digitalWrite(ledPower, LOW); // power on the LED
       delayMicroseconds(samplingTime);// make 50 temperature sample
