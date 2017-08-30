@@ -30,6 +30,7 @@ bool handleFileRead(String path) {
       path += ".gz";
     File file = SPIFFS.open(path, "r");
     size_t sent = server.streamFile(file, contentType);
+    
     file.close();
     return true;
   }

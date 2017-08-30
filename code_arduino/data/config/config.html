@@ -13,7 +13,7 @@
 		var number_items_capt2=0;
 		var current_draged_capt1="";
 		var current_draged_capt2="";
-		var frequency =1000;
+		var frequency =2000;
 		var xh_serveur = new XMLHttpRequest();
 		var config="/lecture_config";
 		var current_draged_choose="";
@@ -23,23 +23,10 @@
 		var password="";
 		var host="";
 		var stream="";
+		var version="";
 		
-		function DragHandler(target, e) {  //element draggé dans le dossier choose
-			e.dataTransfer.setData('Text', target.id);
-			current_draged_choose= e.dataTransfer.getData('Text');
-			console.log("current choose: "+current_draged_choose);        
-		}
 		
-		function DragHandler_capt1(target, e) {  //element draggé dans le capt1
-			current_draged_capt1= e.dataTransfer.getData('Text');
-			console.log("current choose capt1: "+current_draged_capt1);        
-		}
-		
-		function DragHandler_capt2(target, e) {  //element draggé dans le capt2
-			current_draged_capt2= e.dataTransfer.getData('Text');
-			console.log("current choose capt1: "+current_draged_capt2);      
-		}
-		
+	
 		function get_config() {
 			
 		
@@ -57,8 +44,10 @@
 						frequency=res.frequency;
 						host=res.host;
 						stream=res.stream;
-						current_draged_capt1=res.capt1;
-						current_draged_capt2=res.capt2;
+						version=res.vers;
+						
+						//current_draged_capt1=res.capt1;
+						//current_draged_capt2=res.capt2;
 						if(client=="true"){
 							document.getElementById('client').checked = true;
 						}
@@ -70,64 +59,19 @@
 						document.getElementById('request').value = request;
 						document.getElementById('frequency').value = frequency;
 						document.getElementById('host').value = host;
+						document.getElementById('p1').innerHTML = version;
 						
-						document.getElementById('capt1').name = current_draged_capt1;
-						document.getElementById('capt2').value = current_draged_capt2;
-						console.log(current_draged_capt1);
+						//document.getElementById('capt1').name = current_draged_capt1;
+						//document.getElementById('capt2').value = current_draged_capt2;
+						//console.log(current_draged_capt1);
+						console.log(version);
 						console.log("configuration chargée");
 						
 					}
 				}
 			}
 			xh_serveur.send(null);
-			set_images();
-		}
 			
-			
-		function DropHandler(target, e) { // déposé chooser			
-			var id = e.dataTransfer.getData('Text');
-				target.appendChild(document.getElementById(id));
-				e.preventDefault();
-				if(id==current_draged_capt1){ 
-					number_items_capt1=0;
-					current_draged_capt1="";
-				}
-				if(id==current_draged_capt2){
-					 number_items_capt2=0;
-					 current_draged_capt2="";
-				 }
-			
-		}
-		
-		function DropHandler_capt1(target, e) { // déposé capt1
-			if(number_items_capt1==0){
-				var id = e.dataTransfer.getData('Text');
-				target.appendChild(document.getElementById(id));
-				e.preventDefault();
-				current_draged_capt1=id;
-				number_items_capt1=1;
-			}else{
-			//current_draged_capt1="";
-			}
-				
-				
-		}
-		
-		function DropHandler_capt2(target, e) { // déposé capt2
-			if(number_items_capt2==0){
-				var id = e.dataTransfer.getData('Text');
-				
-				target.appendChild(document.getElementById(id));
-				current_draged_capt2=id;
-				e.preventDefault();
-				number_items_capt2=1;
-			}else{
-			//current_draged_capt2="";
-			}
-							
-		}
-		function sleep (time) {
-			return new Promise((resolve) => setTimeout(resolve, time));
 		}
 		
 		function upload_config(e){
@@ -141,15 +85,16 @@
 			host=document.getElementById('host').value;		
 			request=document.getElementById('request').value;
 		
-		console.log("capteur 1 : "+current_draged_capt1);
-		console.log("capteur 2 : "+current_draged_capt2);
-		var envoi_config="write?capt1="+current_draged_capt1+"&capt2="+current_draged_capt2+"&frequency="+frequency+"&client="+client+"&ssid="+ssid+"&password="+password+"&request="+request+"&host="+host+"&stream="+stream;
+		console.log("capteur 1 : "+ liste1.options[liste1.selectedIndex].value);
+		console.log("capteur 2 : "+ liste2.options[liste2.selectedIndex].value);
+		var envoi_config="write?capt1="+liste1.options[liste1.selectedIndex].value+"&capt2="+liste2.options[liste2.selectedIndex].value+"&frequency="+frequency+"&client="+client+"&ssid="+ssid+"&password="+password+"&request="+request+"&host="+host+"&stream="+stream;
 		console.log(envoi_config);
 		httpGet(envoi_config );
-
-		sleep(10000).then(() => {
-		window.location.href=( '../');
-		})
+		
+		setTimeout(goback(), 6000);
+		
+		
+		
 		
 		}
 		function httpGet(theUrl)
@@ -160,68 +105,73 @@
 			return xmlHttp.responseText;
 		}
 		
-		function set_images()
-		{
-			var delay=200;
-			sleep1(delay);
-			document.getElementById("co2").src="img/carbone.jpg";
-			console.log("image1");
-			sleep1(delay);
-			document.getElementById("sound").src="img/sound.jpg";
-			console.log("image2");
-			sleep1(delay);
-			document.getElementById("light").src="img/light_analog.jpg";
-			console.log("image3");
-			sleep1(delay);
-			document.getElementById("dallas").src="img/Dallas.jpg";
-			console.log("image4");
-			sleep1(delay);
-			document.getElementById("dht11").src="img/dht11.jpg";
-			console.log("image5");
-			sleep1(delay);			
-			document.getElementById("bmp180").src="img/BMP180.jpg";
-			console.log("image6");			
-			sleep1(delay);
-			document.getElementById("captobox").src="img/capto.png";
-			console.log("image7");
-		}
+		function goback(){
+		console.log("redirection !");
+		window.location='../index.html';
 		
-		function sleep1(milliseconds) {
-				var start = new Date().getTime();
-				for (var i = 0; i < 1e7; i++) {
-					if ((new Date().getTime() - start) > milliseconds){
-					break;
-				}
 		}
+	
+		
 
     </script>
 </head>
 <body onload="get_config()">
-
+<p id="p1">version</p>
     <header>
+		
         <h1>Choix du capteur</h1>
      
     </header>
     <br>
-
-    <div ondrop="DropHandler(this, event)" ondragenter="return false" ondragover="return false" class="choosebox">
-        <img src="img/blank.jpg" id="co2" ondragstart="DragHandler(this, event)" width="75" height="75" border="0" alt="" />
-        <img src="img/blank.jpg" id="sound" ondragstart="DragHandler(this, event)" width="75" height="75" border="0" alt="" />
-        <img src="img/blank.jpg" id="dht11" ondragstart="DragHandler(this, event)" width="75" height="75" border="0" alt="" />
-        <img src="img/blank.jpg" id="dallas" ondragstart="DragHandler(this, event)" width="75" height="75" border="0" alt="" />
-        <img src="img/blank.jpg" id="bmp180" ondragstart="DragHandler(this, event)" width="75" height="75" border="0" alt="" />
-        <img src="img/blank.jpg" id="light" ondragstart="DragHandler(this, event)" width="75" height="75" border="0" alt="" />
-    </div>
 <div id="center">
-    <div id="capt1" ondrop="DropHandler_capt1(this, event)" ondragstart="DragHandler_capt1(this, event)" ondragenter="return false" ondragover="return false" class="dndbox"></div>
-    <img src="img/blank.jpg" class="captobox"/>
-    <div id="capt2" ondrop="DropHandler_capt2(this, event)" ondragstart="DragHandler_capt2(this, event)" ondragenter="return false" ondragover="return false" class="dndbox"></div>
-	
-</div>
+<table>
 
+	<tr>
+      <th><label for="capt1">Choix du capteur 1</label><br />
+       <select name="capt1" id="liste1">
+           <option value="co2">CO2 PPM MH-Z16</option>
+           <option value="sound">Son</option>
+           <option value="dht11_temp">Temperature °C DHT11</option>
+           <option value="dht11_hum">Humidite % DHT11</option>
+           <option value="dallas">Sonde de température Dallas °C</option>           
+           <option value="light">Lumière</option>           
+           <option value="dust">Particules PM 2,5 mg/m3</option>
+           <option value="mod_cov">Composés volatiles PPB MOD-1023 </option>
+           <option value="mod_co2">CO2 PPM MOD-1023</option>
+           <option value="mod_temp">température °C MOD-1023</option>
+           <option value="mod_bme280">Pression atmosphérique hPa MOD-1023</option>
+           <option value="mod_hum">Humidité % MOD-1023</option>
+           
+       </select>
+       </th>
+       <th>________________</th>
+       <th>		
+       <label for="capt2">Choix du capteur 2</label><br />
+       <select name="capt2" id="liste2">
+           <option value="sound">Son</option>
+           <option value="dht11_temp">Temperature °C DHT11</option>
+           <option value="dht11_hum">Humidite % DHT11</option>
+           <option value="dallas">Sonde de température Dallas °C</option>           
+           <option value="light">Lumière</option>           
+           <option value="dust">Particules PM 2,5 mg/m3</option>
+           <option value="mod_cov">Composés volatiles PPB MOD-1023 </option>
+           <option value="mod_co2">CO2 PPM MOD-1023</option>
+           <option value="mod_temp">température °C MOD-1023</option>
+           <option value="mod_bme280">Pression atmosphérique hPa MOD-1023</option>
+           <option value="mod_hum">Humidité % MOD-1023</option>
+       </select>
+       </th>
+  </tr>
+  
+  <tr>
+  <th colspan="3"><img src="img/capto.png"></img></th>
+  </tr>
+  
+</table>
+</div>
 <header>
 <h1>Fréquence de rafraichissement</h1>
-<input id= "frequency" type="number" min="200" max="120000" step="200" placeholder="En millisecondes">
+<input id= "frequency" type="number" min="200" max="120000" step="200" value="2000" placeholder="En millisecondes">
 
 <h1>Choix du réseau</h1>
 <input id="client" type="checkbox" name="client" value="okay"> Mettre la captobox sur internet<br>
@@ -235,6 +185,7 @@
 </header>
 <div id="center">
 <button type="button" onclick= "upload_config()">Uploader la configuration !</button>
+<button onclick="window.location='../config/update.html';">Mise à jour du firmware</button>
 </div>
 
 </body>
