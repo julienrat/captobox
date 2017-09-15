@@ -26,4 +26,4 @@ Pour installer les librairies rendez-vous dans `Croquis / Inclure un bibliothèq
 - OneWire.zip
 - Time.zip
 
-## Compilez !
+## Compilez ! et téléversez !
