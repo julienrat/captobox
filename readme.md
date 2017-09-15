@@ -17,6 +17,7 @@
 Pour installer les librairies rendez-vous dans `Croquis / Inclure un bibliothèque / Ajouter une bibliothèque ZIP...`
 , dans le dossier `~/Arduino/captobox/libs` ajoutez une à une les bibliothèques zippées
 - Adafruit_BMP085_Unified.zip
+- Adafruit_NeoPixel.zip
 - Adafruit_Unified_Sensor.zip
 - BlueDot_BME280_Library.zip
 - BME280-master.zip
