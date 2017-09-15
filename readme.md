@@ -3,7 +3,7 @@
 ## Prérequis
 - Disposer de la derniere version de l'IDE Arduino (1.8.4)
 - Avoir installé les cartes ESP8266 en ajoutant l'adresse suivante dans le menu `Préférences` : `http://arduino.esp8266.com/stable/package_esp8266com_index.json`
-- Avoir installé le plugin ESP8266 file uploader https://github.com/esp8266/arduino-esp8266fs-plugin esp8266fs.jar dans le repertoire `<home_dir>/Arduino/tools/ESP8266FS/tool/`
+- Avoir installé le plugin ESP8266 file uploaderhttps://github.com/esp8266/arduino-esp8266fs-plugin/releases/download/0.3.0/ESP8266FS-0.3.0.zip et dézippez esp8266fs.jar dans le repertoire `<home_dir>/Arduino/tools/ESP8266FS/tool/`
 
 ## Installation
 1. Téléchargez l'archive et dézzipez là dans le dossier arduino (là où se trouvent vos programmes, sous linux ~/Arduino)
