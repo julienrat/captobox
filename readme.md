@@ -14,3 +14,14 @@
 ## Liste des librairies à installer
 Pour installer les librairies rendez-vous dans `Croquis / Inclure un bibliothèque / Ajouter une bibliothèque ZIP...`
 1. dans le dossier `~/Arduino/captobox/libs` ajoutez une à une les bibliothèques zippées
+- Adafruit_BMP085_Unified.zip
+- Adafruit_Unified_Sensor.zip
+- BlueDot_BME280_Library.zip
+- BME280-master.zip
+- DallasTemperature.zip
+- DHT_sensor_library.zip
+- elapsedMillis.zip
+- MOD-1023-master.zip
+- OneButton.zip
+- OneWire.zip
+- Time.zip
