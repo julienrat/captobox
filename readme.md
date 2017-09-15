@@ -12,5 +12,5 @@
 5. Chargez le code de la captobox `Fichier / Carnet de croquis / captobox / captobox_beta`
 
 ## Liste des librairies à installer
-Pour installer les librairies rendez-vous dans `Croquis / Inclure un bibliothèque / Gérer les bibliothèques`
-1. 
+Pour installer les librairies rendez-vous dans `Croquis / Inclure un bibliothèque / Ajouter une bibliothèque ZIP...`
+1. dans le dossier `~/Arduino/captobox/libs` ajoutez une à une les bibliothèques zippées
