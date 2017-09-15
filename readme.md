@@ -9,7 +9,8 @@
 2. Renommer le dossier `captobox-master` en `captobox`
 3. Relancez l'IDE Arduino
 4. Sélectionnez la carte `WeMos D1 R2 & mini`
-5. Chargez le code de la captobox Fichier / Carnet de croquis / captobox / captobox_beta
+5. Chargez le code de la captobox `Fichier / Carnet de croquis / captobox / captobox_beta`
 
 ## Liste des librairies à installer
+Pour instllerles librairies rendez-vous dans `Croquis / Inclure un bibliothèque / Gérer les bibliothèques`
 1. 
