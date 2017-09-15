@@ -1,6 +1,6 @@
 # La Captobox
 
-##Installation
+## Installation
 ### Prérequis
 - Disposer de la derniere version de l'IDE Arduino (1.8.4)
 - Avoir installé les cartes ESP8266 en ajoutant l'adresse suivante dans le menu `Préférences` : `http://arduino.esp8266.com/stable/package_esp8266com_index.json`
