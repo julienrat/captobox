@@ -6,7 +6,7 @@
 - Avoir installé le plugin ESP8266 file uploaderhttps://github.com/esp8266/arduino-esp8266fs-plugin/releases/download/0.3.0/ESP8266FS-0.3.0.zip et dézippez esp8266fs.jar dans le repertoire `<home_dir>/Arduino/tools/ESP8266FS/tool/`
 
 ## Installation
-1. Téléchargez l'archive et dézzipez là dans le dossier arduino (là où se trouvent vos programmes, sous linux ~/Arduino)
+1. Téléchargez l'archive et dézippez là dans le dossier arduino (là où se trouvent vos programmes, sous linux ~/Arduino)
 2. Renommer le dossier `captobox-master` en `captobox`
 3. Relancez l'IDE Arduino
 4. Sélectionnez la carte `WeMos D1 R2 & mini`
