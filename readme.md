@@ -28,3 +28,6 @@ Pour installer les librairies rendez-vous dans `Croquis / Inclure un bibliothèq
 - Time.zip
 
 ## Compilez ! et téléversez !
+
+## Uploadez les pages dans la mémoire
+Rendez-vous dans Outils / ESP8266 Sketch data upload
