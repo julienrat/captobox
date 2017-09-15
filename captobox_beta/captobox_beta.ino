@@ -7,11 +7,12 @@
 #include <Time.h>
 #include <elapsedMillis.h>
 #include "OneButton.h"
+#include <Adafruit_NeoPixel.h>
 //Import des bibliotheques SPIFFS
 #include "FS.h"
 #include "spiffs_lib.h"
 #include "libs_capteurs.h"
-String version="version beta +++";
+String version = "version beta +++";
 
 const int pin_sensor1 = RX;
 const int pin_sensor2 = 5;
@@ -39,11 +40,14 @@ OneButton button(D3, true);
 
 elapsedMillis timeElapsed;
 unsigned int interval = 1000;
+Adafruit_NeoPixel pixels = Adafruit_NeoPixel(1, D4, NEO_GRB + NEO_KHZ800);
 
 void setup() {
   delay(1000);
   Serial.begin(9600); //debug série
-
+  pixels.begin();
+  pixels.setPixelColor(0, pixels.Color(10, 0, 0));
+  pixels.show();
   button.attachDuringLongPress(erase_file);
   button.attachDoubleClick(save_on);
   // reset pin connected to rst
@@ -119,13 +123,14 @@ void setup() {
   Serial.println("================================================ ");
   digitalWrite(BUILTIN_LED, HIGH);
 
-
-
+  pixels.setPixelColor(0, pixels.Color(0, 10, 0));
+  pixels.show();
 }
 
 void loop() {
   server.handleClient();
   button.tick();
+
 
   if (timeElapsed > frequency.toInt())
   {
@@ -265,8 +270,8 @@ void serveur() {
     json += ", \"host\":\"" + String(host) + "\"";
     json += ", \"stream\":\"" + stream + "\"";
     json += ", \"save\":\"" + String(save) + "\"";
-    json += ", \"vers\":\"" + version+ "\"";
-   
+    json += ", \"vers\":\"" + version + "\"";
+
     json += "}";
     server.send(200, "text/json", json);
 
@@ -357,7 +362,10 @@ void savedata() {
       save_file.close();
       write_title = false;
     }
-    digitalWrite(BUILTIN_LED, LOW);
+
+
+    pixels.setPixelColor(0, pixels.Color(0, 0, 10));
+    pixels.show();
     String val_capt1 = String(sensor_start(capt1, pin_sensor1));
     String val_capt2 = String(sensor_start(capt2, pin_sensor2));
 
@@ -371,16 +379,22 @@ void savedata() {
     save_file.print(val_capt2);
     save_file.print("\n");
     save_file.close();
-    digitalWrite(BUILTIN_LED, HIGH);
+
+
+  } else {
+    pixels.setPixelColor(0, pixels.Color(0, 10, 0));
+    pixels.show();
   }
 }
 
 void erase_file() {
   SPIFFS.remove("/save.csv");
   write_title = true;
-  digitalWrite(BUILTIN_LED, LOW);
+   pixels.setPixelColor(0, pixels.Color(10, 0, 0));
+    pixels.show();
   delay(50);
-  digitalWrite(BUILTIN_LED, HIGH);
+   pixels.setPixelColor(0, pixels.Color(0, 0, 10));
+    pixels.show();
   delay(50);
 
 }
@@ -512,4 +526,3 @@ void web_update() {
       break;
   }
 }
-
